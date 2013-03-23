@@ -29,12 +29,13 @@ module Crawler
           body = ic.iconv(io.read)
       }
     rescue
+      puts "iconv errors"
     end
     doc = Nokogiri::HTML(body)
     meta = doc.css("head meta")
-    charset = meta[0][:charset]
+    charset = meta[0][:charset] || meta[0][:content]
 
-    if (charset == "utf-8")
+    if (charset.index("utf-8"))
       body = ''
 
       begin
@@ -45,6 +46,7 @@ module Crawler
       end
       doc = Nokogiri::HTML(body)
     end
+    doc
   end
 
   
