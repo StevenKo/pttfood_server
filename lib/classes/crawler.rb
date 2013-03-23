@@ -19,19 +19,32 @@ module Crawler
   end
   
   def get_page url
-  # url = url.gsub(/\s+/, "")
-  # ecode_url = URI.encode(url)
-  ic = Iconv.new("utf-8//translit//IGNORE","big5")
-  body = ''
+    # url = url.gsub(/\s+/, "")
+    # ecode_url = URI.encode(url)
+    ic = Iconv.new("utf-8//translit//IGNORE","big5")
+    body = ''
 
-  begin
-    open(url){ |io|
-        body = ic.iconv(io.read)
-    }
-  rescue
-  end
-  doc = Nokogiri::HTML(body)
+    begin
+      open(url){ |io|
+          body = ic.iconv(io.read)
+      }
+    rescue
+    end
+    doc = Nokogiri::HTML(body)
+    meta = doc.css("head meta")
+    charset = meta[0][:charset]
 
+    if (charset == "utf-8")
+      body = ''
+
+      begin
+        open(url){ |io|
+            body = io.read
+        }
+      rescue
+      end
+      doc = Nokogiri::HTML(body)
+    end
   end
 
   

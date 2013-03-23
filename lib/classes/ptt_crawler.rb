@@ -16,9 +16,15 @@ class PttCrawler
 
   def crawl_article_detail article_id
     article = Article.find(article_id)
-    nodes = @page_html.css("#mainContent")
-    content = nodes.children[3].text
     
+    begin
+      nodes = @page_html.css("#mainContent")
+      content = nodes.children[3].text
+    rescue
+      nodes = @page_html.css("#mainContainer .bbsContent")
+      content = nodes.text
+    end
+
     if content.match("http.*blog.*\.html")
         link = content.match("http.*blog.*\.html")[0]
         article.link = link
@@ -28,6 +34,8 @@ class PttCrawler
       texts =content.split("\n")
       release_time = texts[2][4..texts[2].size]
       content = texts[4..texts.size].join("\n")
+      texts[0].match("作者: (.*) 看板")
+      article.author = $1
       article.release_time = release_time
       article.content = content
     else

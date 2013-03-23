@@ -5,7 +5,7 @@ set :application, "ptt_food"
 set :rails_env, "production"
 
 set :branch, "master"
-set :repository,  "https://github.com/StevenKo/ptt_food.git"
+set :repository,  "https://github.com/StevenKo/pttfood_server.git"
 set :scm, "git"
 set :user, "apps" # 一個伺服器上的帳戶用來放你的應用程式，不需要有sudo權限，但是需要有權限可以讀取Git repository拿到原始碼
 
