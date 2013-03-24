@@ -5,7 +5,9 @@ PttfoodServer::Application.routes.draw do
   namespace :api do
     namespace :v1 do
       
-      resources :categories, :only => [:index]do
+      
+
+      resources :categories, :only => [:index] do
         collection do 
           get 'area'
         end
@@ -14,10 +16,14 @@ PttfoodServer::Application.routes.draw do
         end
       end
 
-      resources :articles,:only => [:index, :show] 
+      resources :articles,:only => [:index, :show] do
+        collection do 
+          get 'search'
+        end
+      end
+
+    
 
     end
   end
-
-
 end
