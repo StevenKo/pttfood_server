@@ -32,7 +32,6 @@ gem 'nokogiri'
 group :test, :development do
   gem "rspec"
   gem "rspec-rails"
-  gem 'sunspot_solr'
 end
 
 
@@ -51,6 +50,7 @@ gem 'slim'
 
 # full text search
 gem 'sunspot_rails'
+gem 'sunspot_solr'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
