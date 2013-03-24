@@ -32,7 +32,6 @@ gem 'nokogiri'
 group :test, :development do
   gem "rspec"
   gem "rspec-rails"
-  gem 'sunspot_solr'
 end
 
 
@@ -48,9 +47,6 @@ gem 'will_paginate'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
-
-# full text search
-gem 'sunspot_rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
