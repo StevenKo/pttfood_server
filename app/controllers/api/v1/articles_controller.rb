@@ -21,4 +21,9 @@ class Api::V1::ArticlesController < Api::ApiController
     articles = @search.results
     render :json => articles
   end
+
+  def new_articles
+    articles = Article.select("id, author, title, release_time").order("id DESC").paginate(:page => params[:page], :per_page => 20)
+    render :json => articles
+  end
 end

@@ -37,7 +37,7 @@ namespace :solr do
   end
   desc "reindex the whole database"
   task :reindex, :roles => :app do
-    # stop
+    stop
     run "rm -rf #{shared_path}/solr/data"
     start
     run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake sunspot:solr:reindex"

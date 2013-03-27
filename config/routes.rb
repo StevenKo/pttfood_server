@@ -19,6 +19,7 @@ PttfoodServer::Application.routes.draw do
       resources :articles,:only => [:index, :show] do
         collection do 
           get 'search'
+          get 'new_articles'
         end
       end
 
