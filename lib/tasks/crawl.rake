@@ -12,10 +12,14 @@ namespace :crawl do
     page = crawler.page_html.css("#prodlist h2")
     page_name = page.text.match(/\d+/)[0].to_i
     (1..page_name).each do |i|
-      crawler = PttCrawler.new
-      crawler.fetch "http://www.ptt.cc/bbs/Food/index#{i}.html"
-      crawler.crawl_articles
-      sleep 0.4
+      begin
+        crawler = PttCrawler.new
+        crawler.fetch "http://www.ptt.cc/bbs/Food/index#{i}.html"
+        crawler.crawl_articles
+        sleep 0.4
+      rescue
+          puts "errors: http://www.ptt.cc/bbs/Food/index#{i}.html"
+      end
     end
   end
 
