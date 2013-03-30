@@ -88,8 +88,13 @@ class PttCrawler
         c.save unless Category.find_by_link("http://www.ptt.cc" + a_node[:href])
         crawler = PttCrawler.new
         crawler.fetch c.link
-        puts c.link
-        crawler.crawl_category_detail c.id
+        # puts c.link
+        
+        begin
+          crawler.crawl_category_detail c.id
+        rescue
+          puts "errors: #{c.link} c_id: #{c.id}"
+        end
       else
         next if Article.find_by_ptt_web_link("http://www.ptt.cc" + a_node[:href])
         article = Article.new
