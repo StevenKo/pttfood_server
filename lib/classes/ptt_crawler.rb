@@ -94,14 +94,7 @@ class PttCrawler
         c.link = "http://www.ptt.cc" + a_node[:href]
         c.parent_id = parent_category_id
         c.save unless Category.find_by_link("http://www.ptt.cc" + a_node[:href])
-        begin  
-          crawler = PttCrawler.new
-          crawler.fetch c.link
-          crawler.crawl_category_detail c.id
-          sleep 0.4
-        rescue
-          puts "errors: #{c.link} c_id: #{c.id}"
-        end
+        CategoryWorker.perform_async(c.id)
       else
         next if Article.find_by_ptt_web_link("http://www.ptt.cc" + a_node[:href])
         article = Article.new

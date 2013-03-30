@@ -12,30 +12,15 @@ namespace :crawl do
     page = crawler.page_html.css("#prodlist h2")
     page_name = page.text.match(/\d+/)[0].to_i
     (1..page_name).each do |i|
-      begin
-        crawler = PttCrawler.new
-        crawler.fetch "http://www.ptt.cc/bbs/Food/index#{i}.html"
-        crawler.crawl_articles
-        sleep 0.4
-      rescue
-          puts "errors: http://www.ptt.cc/bbs/Food/index#{i}.html"
-      end
+      CrawlWorker.perform_async("http://www.ptt.cc/bbs/Food/index#{i}.html")
     end
   end
 
   task :crawl_article_detail => :environment do
     Article.where("content is null").select("id,ptt_web_link").find_in_batches do |articles|
       articles.each do |article|
-        # ArticleWorker.perform_async(article.id)
         next if article.content
-        begin
-          crawler = PttCrawler.new
-          crawler.fetch article.ptt_web_link
-          crawler.crawl_article_detail article.id
-          sleep 0.4
-        rescue
-          puts "errors: #{article.ptt_web_link} article_id: #{article.id}"
-        end
+        DetailWorker.perform_async(article.id)
       end
     end
   end
@@ -53,18 +38,8 @@ namespace :crawl do
   end
 
   task :crawl_category_detail => :environment do
-    (1..5).each do |i|
-      puts "itorate #{i}"
-      Category.where("parent_id = 0 or is_area = true").each do |c|
-        begin
-          crawler = PttCrawler.new
-          crawler.fetch c.link
-          crawler.crawl_category_detail c.id
-          sleep 0.4
-        rescue
-          puts "errors: #{c.link} c_id: #{c.id}"
-        end
-      end
+    Category.where("parent_id = 0 or is_area = true").each do |c|
+      CategoryWorker.perform_async(c.id)
     end
   end
 end
