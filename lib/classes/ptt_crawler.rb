@@ -8,7 +8,7 @@ class PttCrawler
       article = Article.new
       article.title = node.css("a")[0].text
       article.ptt_web_link = "http://www.ptt.cc" + node.css("a")[0][:href]
-      next if Article.find_by_ptt_web_link("http://www.ptt.cc" + a_node[:href])
+      next if Article.find_by_ptt_web_link(article.ptt_web_link)
       article.author = node.xpath("//td[@width='120']")[0].text
       puts article.title
       article.save
