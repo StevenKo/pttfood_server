@@ -4,7 +4,7 @@ class CrawlWorker
   
   def perform(articles_link)
     crawler = PttCrawler.new
-    crawler.fetch "http://www.ptt.cc/bbs/Food/index#{i}.html"
+    crawler.fetch articles_link
     crawler.crawl_articles
     sleep 0.4
   end
