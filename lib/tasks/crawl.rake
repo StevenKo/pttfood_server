@@ -1,10 +1,10 @@
 # encoding: utf-8
 namespace :crawl do
-  task :crawl_ptt_new_article => :environment do
-    crawler = PttCrawler.new
-    crawler.fetch "http://www.ptt.cc/bbs/Food/index.html"
-    crawler.crawl_articles
-  end
+  # task :crawl_ptt_new_article => :environment do
+  #   crawler = PttCrawler.new
+  #   crawler.fetch "http://www.ptt.cc/bbs/Food/index.html"
+  #   crawler.crawl_articles
+  # end
 
   task :crawl_ptt_whole_article => :environment do
     crawler = PttCrawler.new
@@ -22,6 +22,7 @@ namespace :crawl do
     Article.where("content is null").select("id,ptt_web_link").find_in_batches do |articles|
       articles.each do |article|
         # ArticleWorker.perform_async(article.id)
+        next if article.content
         begin
           crawler = PttCrawler.new
           crawler.fetch article.ptt_web_link

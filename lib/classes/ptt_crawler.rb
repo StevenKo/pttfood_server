@@ -8,6 +8,7 @@ class PttCrawler
       article = Article.new
       article.title = node.css("a")[0].text
       article.ptt_web_link = "http://www.ptt.cc" + node.css("a")[0][:href]
+      next if Article.find_by_ptt_web_link("http://www.ptt.cc" + a_node[:href])
       article.author = node.xpath("//td[@width='120']")[0].text
       puts article.title
       article.save
@@ -52,6 +53,7 @@ class PttCrawler
       c = Category.new
       c.name = node.text
       c.link = "http://www.ptt.cc" + node[:href]
+      next if Category.find_by_link(c.link)
       c.is_area = true
       c.save
     end
@@ -63,6 +65,7 @@ class PttCrawler
       c = Category.new
       c.name = node.text
       c.link = "http://www.ptt.cc" + node[:href]
+      next if Category.find_by_link(c.link)
       c.parent_id = 0
       c.save
     end
