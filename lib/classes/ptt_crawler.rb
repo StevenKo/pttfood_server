@@ -77,7 +77,7 @@ class PttCrawler
       img_src = node.css("img")[0][:src]
       a_node = node.css("a")[0]
       if img_src.index("folder")
-        next if Category.find_by_link("http://www.ptt.cc" + a_node[:href])
+        # next if Category.find_by_link("http://www.ptt.cc" + a_node[:href])
 
         c = Category.new
         next if a_node.text.index("◎----")
@@ -85,7 +85,7 @@ class PttCrawler
         c.name = a_node.text
         c.link = "http://www.ptt.cc" + a_node[:href]
         c.parent_id = parent_category_id
-        c.save
+        c.save unless Category.find_by_link("http://www.ptt.cc" + a_node[:href])
         crawler = PttCrawler.new
         crawler.fetch c.link
         puts c.link
