@@ -86,14 +86,19 @@ class PttCrawler
       a_node = node.css("a")[0]
       if img_src.index("folder")
         # next if Category.find_by_link("http://www.ptt.cc" + a_node[:href])
-
-        c = Category.new
         next if a_node.text.index("◎----")
         next if a_node.text.index("=======")
+        
+        if c1 = Category.find_by_link("http://www.ptt.cc" + a_node[:href])
+          CategoryWorker.perform_async(c1.id)
+          next
+        end
+
+        c = Category.new
         c.name = a_node.text
         c.link = "http://www.ptt.cc" + a_node[:href]
         c.parent_id = parent_category_id
-        c.save unless Category.find_by_link("http://www.ptt.cc" + a_node[:href])
+        c.save
         CategoryWorker.perform_async(c.id)
       else
         next if Article.find_by_ptt_web_link("http://www.ptt.cc" + a_node[:href])
