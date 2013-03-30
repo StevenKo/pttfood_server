@@ -90,7 +90,7 @@ class PttCrawler
           crawler = PttCrawler.new
           crawler.fetch c.link
           crawler.crawl_category_detail c.id
-          sleep 0.3
+          sleep 0.4
         rescue
           puts "errors: #{c.link} c_id: #{c.id}"
         end

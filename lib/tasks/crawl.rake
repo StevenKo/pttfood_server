@@ -15,6 +15,7 @@ namespace :crawl do
       crawler = PttCrawler.new
       crawler.fetch "http://www.ptt.cc/bbs/Food/index#{i}.html"
       crawler.crawl_articles
+      sleep 0.4
     end
   end
 
@@ -27,6 +28,7 @@ namespace :crawl do
           crawler = PttCrawler.new
           crawler.fetch article.ptt_web_link
           crawler.crawl_article_detail article.id
+          sleep 0.4
         rescue
           puts "errors: #{article.ptt_web_link} article_id: #{article.id}"
         end
@@ -54,7 +56,7 @@ namespace :crawl do
           crawler = PttCrawler.new
           crawler.fetch c.link
           crawler.crawl_category_detail c.id
-          sleep 0.3
+          sleep 0.4
         rescue
           puts "errors: #{c.link} c_id: #{c.id}"
         end
