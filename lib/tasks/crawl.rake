@@ -47,13 +47,14 @@ namespace :crawl do
   end
 
   task :crawl_category_detail => :environment do
-    (1..100).each do |i|
+    (1..5).each do |i|
       puts "itorate #{i}"
       Category.where("parent_id = 0 or is_area = true").each do |c|
         begin
           crawler = PttCrawler.new
           crawler.fetch c.link
           crawler.crawl_category_detail c.id
+          sleep 5
         rescue
           puts "errors: #{c.link} c_id: #{c.id}"
         end
