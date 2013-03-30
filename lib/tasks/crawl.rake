@@ -54,7 +54,7 @@ namespace :crawl do
           crawler = PttCrawler.new
           crawler.fetch c.link
           crawler.crawl_category_detail c.id
-          sleep 5
+          sleep 1
         rescue
           puts "errors: #{c.link} c_id: #{c.id}"
         end
