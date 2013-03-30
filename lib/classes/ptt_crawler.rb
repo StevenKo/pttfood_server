@@ -6,13 +6,21 @@ class PttCrawler
     nodes = @page_html.css("#prodlist dl dd")
     nodes.each do |node|
       article = Article.new
-      article.title = node.css("a")[0].text
+      article.title = node.css("a")[0].text.strip
+      next if article.title == ""
+      next if not_include_title(article.title)
       article.ptt_web_link = "http://www.ptt.cc" + node.css("a")[0][:href]
       next if Article.find_by_ptt_web_link(article.ptt_web_link)
       article.author = node.xpath("//td[@width='120']")[0].text
       puts article.title
       article.save
     end
+  end
+
+  def not_include_title title
+    return true if title.index("本文已被刪除")
+    return true if title.index("公告")
+    return false
   end
 
   def crawl_article_detail article_id
