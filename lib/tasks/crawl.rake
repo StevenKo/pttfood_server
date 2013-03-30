@@ -48,10 +48,13 @@ namespace :crawl do
 
   task :crawl_category_detail => :environment do
     Category.where("parent_id = 0 or is_area = true").each do |c|
-      puts c.link
-      crawler = PttCrawler.new
-      crawler.fetch c.link
-      crawler.crawl_category_detail c.id
+      begin
+        crawler = PttCrawler.new
+        crawler.fetch c.link
+        crawler.crawl_category_detail c.id
+      rescue
+        puts "errors: #{c.link} c_id: #{c.id}"
+      end
     end
   end
 end
