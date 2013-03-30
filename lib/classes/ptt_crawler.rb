@@ -86,11 +86,9 @@ class PttCrawler
         c.link = "http://www.ptt.cc" + a_node[:href]
         c.parent_id = parent_category_id
         c.save unless Category.find_by_link("http://www.ptt.cc" + a_node[:href])
-        crawler = PttCrawler.new
-        crawler.fetch c.link
-        # puts c.link
-        
-        begin
+        begin  
+          crawler = PttCrawler.new
+          crawler.fetch c.link
           crawler.crawl_category_detail c.id
         rescue
           puts "errors: #{c.link} c_id: #{c.id}"
