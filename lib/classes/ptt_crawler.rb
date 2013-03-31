@@ -14,6 +14,11 @@ class PttCrawler
       article.author = node.xpath("//td[@width='120']")[0].text
       puts article.title
       article.save
+
+      #### crawl article detail
+      crawler = PttCrawler.new
+      crawler.fetch article.ptt_web_link
+      crawler.crawl_article_detail article.id
     end
   end
 

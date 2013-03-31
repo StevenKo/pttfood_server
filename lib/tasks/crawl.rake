@@ -1,6 +1,16 @@
 # encoding: utf-8
 namespace :crawl do
 
+  task :crawl_ptt_new_articles => :environment do
+    crawler = PttCrawler.new
+    crawler.fetch "http://www.ptt.cc/bbs/Food/index.html"
+    page = crawler.page_html.css("#prodlist h2")
+    page_name = page.text.match(/\d+/)[0].to_i
+    (page_name-50..page_name).each do |i|
+      CrawlWorker.perform_async("http://www.ptt.cc/bbs/Food/index#{i}.html")
+    end
+  end
+
   task :crawl_ptt_whole_article => :environment do
     crawler = PttCrawler.new
     crawler.fetch "http://www.ptt.cc/bbs/Food/index.html"
