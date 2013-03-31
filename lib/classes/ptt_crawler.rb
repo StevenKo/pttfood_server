@@ -50,7 +50,8 @@ class PttCrawler
     else
       article.content = content
     end
-
+    
+    article.is_show = true
     article.save
     puts article.title
   end
