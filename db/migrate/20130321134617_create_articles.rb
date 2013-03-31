@@ -8,6 +8,7 @@ class CreateArticles < ActiveRecord::Migration
       t.string :link
       t.string :ptt_web_link
       t.integer :category_id
+      t.boolean :is_from_category
 
       t.timestamps
     end

@@ -15,14 +15,15 @@ ActiveRecord::Schema.define(:version => 20130330042308) do
 
   create_table "articles", :force => true do |t|
     t.string   "author"
-    t.string   "title",        :default => ""
+    t.string   "title",            :default => ""
     t.string   "release_time"
     t.text     "content"
     t.string   "link"
     t.string   "ptt_web_link"
     t.integer  "category_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.boolean  "is_from_category"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
