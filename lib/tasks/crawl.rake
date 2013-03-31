@@ -6,7 +6,7 @@ namespace :crawl do
     crawler.fetch "http://www.ptt.cc/bbs/Food/index.html"
     page = crawler.page_html.css("#prodlist h2")
     page_name = page.text.match(/\d+/)[0].to_i
-    (page_name-50..page_name).each do |i|
+    (page_name-20..page_name).each do |i|
       CrawlWorker.perform_async("http://www.ptt.cc/bbs/Food/index#{i}.html")
     end
   end
