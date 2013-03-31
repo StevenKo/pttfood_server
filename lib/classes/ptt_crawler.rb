@@ -106,6 +106,7 @@ class PttCrawler
         article.title = a_node.text
         article.ptt_web_link = "http://www.ptt.cc" + a_node[:href]
         article.category_id = parent_category_id
+        article.is_from_category = true
         article.save
       end
     end
