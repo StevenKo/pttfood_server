@@ -16,9 +16,7 @@ class PttCrawler
       article.save
 
       #### crawl article detail
-      crawler = PttCrawler.new
-      crawler.fetch article.ptt_web_link
-      crawler.crawl_article_detail article.id
+      DetailWorker.perform_async(article.id)
     end
   end
 
@@ -114,6 +112,9 @@ class PttCrawler
         article.category_id = parent_category_id
         article.is_from_category = true
         article.save
+
+        #### crawl article detail
+        DetailWorker.perform_async(article.id)
       end
     end
   end 
