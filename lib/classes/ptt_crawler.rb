@@ -90,8 +90,8 @@ class PttCrawler
       a_node = node.css("a")[0]
       if img_src.index("folder")
         # next if Category.find_by_link("http://www.ptt.cc" + a_node[:href])
-        next if a_node.text.index("◎----")
-        next if a_node.text.index("=======")
+        next if (a_node.text.index("◎----") != nil)
+        next if (a_node.text.index("=======") != nil)
         
         if c1 = Category.find_by_link("http://www.ptt.cc" + a_node[:href])
           CategoryWorker.perform_async(c1.id)
