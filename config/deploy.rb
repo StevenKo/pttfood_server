@@ -8,13 +8,14 @@ set :branch, "master"
 set :repository,  "https://github.com/StevenKo/pttfood_server.git"
 set :scm, "git"
 set :user, "apps" # 一個伺服器上的帳戶用來放你的應用程式，不需要有sudo權限，但是需要有權限可以讀取Git repository拿到原始碼
+set :port, "222"
 
 set :deploy_to, "/home/apps/ptt_food"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
-role :web, "106.187.52.8"
-role :app, "106.187.52.8"
+role :web, "106.187.52.8","106.187.89.116"
+role :app, "106.187.52.8","106.187.89.116"
 role :db,  "106.187.52.8", :primary => true
 
 

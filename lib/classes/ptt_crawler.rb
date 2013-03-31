@@ -105,7 +105,10 @@ class PttCrawler
         c.save
         CategoryWorker.perform_async(c.id)
       else
-        next if Article.find_by_ptt_web_link("http://www.ptt.cc" + a_node[:href])
+        if article = Article.find_by_ptt_web_link("http://www.ptt.cc" + a_node[:href])
+          DetailWorker.perform_async(article.id)
+          next 
+        end
         article = Article.new
         article.title = a_node.text
         article.ptt_web_link = "http://www.ptt.cc" + a_node[:href]
