@@ -2,7 +2,7 @@ class Api::V1::ArticlesController < Api::ApiController
 
   def index
     category_id = params[:category_id]
-    articles = Article.where("category_id = #{category_id}").select('id, author, title, release_time')
+    articles = Article.where("category_id = #{category_id}").show.select('id, author, title, release_time')
     render :json => articles
   end
 
@@ -14,7 +14,7 @@ class Api::V1::ArticlesController < Api::ApiController
   def search 
     search_str = params[:keyword]
     page = params[:page]
-    @search = Article.search do
+    @search = Article.show.search do
       fulltext search_str
       paginate(:page => page, :per_page => 10)
     end
@@ -23,7 +23,7 @@ class Api::V1::ArticlesController < Api::ApiController
   end
 
   def new_articles
-    articles = Article.is_not_from_cagetory.select("id, author, title, release_time").order("id DESC").paginate(:page => params[:page], :per_page => 20)
+    articles = Article.show.is_not_from_cagetory.select("id, author, title, release_time").order("id DESC").paginate(:page => params[:page], :per_page => 20)
     render :json => articles
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130330042308) do
+ActiveRecord::Schema.define(:version => 20130331033509) do
 
   create_table "articles", :force => true do |t|
     t.string   "author"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20130330042308) do
     t.boolean  "is_from_category", :default => false
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
+    t.boolean  "is_show",          :default => false
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
