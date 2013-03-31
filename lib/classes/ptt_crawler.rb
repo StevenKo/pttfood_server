@@ -4,6 +4,7 @@ class PttCrawler
 
   def crawl_articles
     nodes = @page_html.css("#prodlist dl dd")
+    raise "error did not crawl tetail" if nodes.blank?
     nodes.each do |node|
       article = Article.new
       article.title = node.css("a")[0].text.strip
@@ -85,6 +86,7 @@ class PttCrawler
 
   def crawl_category_detail parent_category_id
     nodes = @page_html.css("#prodlist dd")
+    raise "error did not crawl tetail" if nodes.blank?
     nodes.each do |node|
       img_src = node.css("img")[0][:src]
       a_node = node.css("a")[0]
