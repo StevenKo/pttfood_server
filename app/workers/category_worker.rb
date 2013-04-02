@@ -3,10 +3,13 @@ class CategoryWorker
   include Sidekiq::Worker
   
   def perform(category_id)
+
+    sleep(rand(100)/100.0)
+    
     c = Category.find(category_id)
     crawler = PttCrawler.new
     crawler.fetch c.link
     crawler.crawl_category_detail c.id
-    sleep 0.4
+    
   end
 end
