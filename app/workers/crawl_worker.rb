@@ -4,11 +4,11 @@ class CrawlWorker
   
   def perform(articles_link)
 
-    sleep(rand(50)/10)
+    sleep(rand(50)/10.0)
 
     crawler = PttCrawler.new
     crawler.fetch articles_link
     crawler.crawl_articles
-    sleep 0.4
+    
   end
 end

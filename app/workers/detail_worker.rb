@@ -4,7 +4,7 @@ class DetailWorker
   
   def perform(article_id)
 
-    sleep(rand(50)/10)
+    sleep(rand(50)/10.0)
 
     article = Article.find(article_id)
     crawler = PttCrawler.new
