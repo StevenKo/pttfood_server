@@ -4,7 +4,7 @@ class CategoryWorker
   
   def perform(category_id)
 
-    sleep(rand(100)/100.0)
+    sleep(rand(50)/10)
     
     c = Category.find(category_id)
     crawler = PttCrawler.new
