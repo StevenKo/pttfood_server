@@ -1,6 +1,7 @@
 # encoding: utf-8
 class CrawlWorker
   include Sidekiq::Worker
+  sidekiq_options queue: "ptt"
   
   def perform(articles_link)
 

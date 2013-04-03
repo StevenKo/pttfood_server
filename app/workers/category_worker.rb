@@ -1,6 +1,7 @@
 # encoding: utf-8
 class CategoryWorker
   include Sidekiq::Worker
+  sidekiq_options queue: "ptt"
   
   def perform(category_id)
 

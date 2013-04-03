@@ -1,6 +1,7 @@
 # encoding: utf-8
 class DetailWorker
   include Sidekiq::Worker
+  sidekiq_options queue: "ptt"
   
   def perform(article_id)
 
