@@ -30,29 +30,50 @@ class PttCrawler
   def crawl_article_detail article_id
     article = Article.find(article_id)
     
-    begin
-      nodes = @page_html.css("#mainContent")
-      content = nodes.children[3].text
-    rescue
-      nodes = @page_html.css("#mainContainer .bbsContent")
-      content = nodes.text
-    end
 
-    if content.match("http.*blog.*\.html")
-        link = content.match("http.*blog.*\.html")[0]
-        article.link = link
-    end
+    if @page_html.css("#mainContent .articleMetaVal").present?
 
-    if content.index("作者:")
-      texts =content.split("\n")
-      release_time = texts[2][4..texts[2].size]
-      content = texts[4..texts.size].join("\n")
-      texts[0].match("作者: (.*) 看板")
-      article.author = $1
-      article.release_time = release_time
+      nodes = @page_html.css("#mainContent .articleMetaVal")
+      article.author = nodes[0].text
+      article.release_time = nodes[3].text
+
+      a_nodes = @page_html.css("#mainContent a")
+      a_nodes.each do |node|
+        if node[:href].index("blog")
+          article.link = node[:href] 
+          break
+        end
+      end
+
+      node = @page_html.css("#mainContent")
+      content = node.children[4..node.children.size-1].text
       article.content = content
     else
-      article.content = content
+
+      begin
+        nodes = @page_html.css("#mainContent")
+        content = nodes.children[3].text
+      rescue
+        nodes = @page_html.css("#mainContainer .bbsContent")
+        content = nodes.text
+      end
+
+      if content.match("http.*blog.*\.html")
+          link = content.match("http.*blog.*\.html")[0]
+          article.link = link
+      end
+
+      if content.index("作者:")
+        texts =content.split("\n")
+        release_time = texts[2][4..texts[2].size]
+        content = texts[4..texts.size].join("\n")
+        texts[0].match("作者: (.*) 看板")
+        article.author = $1
+        article.release_time = release_time
+        article.content = content
+      else
+        article.content = content
+      end
     end
     
     article.is_show = true

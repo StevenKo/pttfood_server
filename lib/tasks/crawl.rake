@@ -46,4 +46,12 @@ namespace :crawl do
       CategoryWorker.perform_async(c.id)
     end
   end
+
+  task :recrawl_article_detail => :environment do
+     Article.where("is_from_category = false").find_in_batches do |articles|
+      articles.each do |article|
+        DetailWorker.perform_async(article.id)
+      end
+     end
+  end
 end
