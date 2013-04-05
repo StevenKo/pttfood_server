@@ -14,8 +14,8 @@ set :deploy_to, "/home/apps/ptt_food"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
-role :web, "106.187.52.8","106.187.89.116"
-role :app, "106.187.52.8","106.187.89.116"
+role :web, "106.187.52.8"
+role :app, "106.187.52.8"
 # role :solr,"106.187.52.8"
 role :db,  "106.187.52.8", :primary => true
 
