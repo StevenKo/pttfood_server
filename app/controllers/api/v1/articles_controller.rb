@@ -12,8 +12,7 @@ class Api::V1::ArticlesController < Api::ApiController
   end
 
   def search 
-    search_str = params[:keyword]
-    articles = Article.search(search_str)
+    articles = Article.search(params)
     
     # articles = Article.where("title like ?", "%#{search_str}%").order("id DESC").paginate(:page => params[:page], :per_page => 10)
 

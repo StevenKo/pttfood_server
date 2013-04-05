@@ -9,9 +9,11 @@ class Article < ActiveRecord::Base
   scope :is_not_from_cagetory, where('is_from_category = false')
   scope :show, where('is_show = true')
 
-  def self.search(keyword)
-    tire.search(load: true) do
-      query { string keyword, default_operator: "AND" }
+  def self.search(params)
+
+    tire.search(page: params[:page], per_page: 10, load: true) do
+      query { string params[:keyword], default_operator: "AND" }
+      sort{by :id, 'desc'}
     end
   end
 
