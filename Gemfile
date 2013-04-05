@@ -49,6 +49,10 @@ gem 'sinatra', require: false
 gem 'slim'
 
 # full text search
+gem 'tire'
+
+# gem 'thinking-sphinx'
+
 # gem 'sunspot_rails'
 # gem 'sunspot_solr'
 # gem 'progress_bar'
