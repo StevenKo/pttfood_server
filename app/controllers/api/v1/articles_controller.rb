@@ -12,14 +12,14 @@ class Api::V1::ArticlesController < Api::ApiController
   end
 
   def search 
-    # search_str = params[:keyword]
-    # page = params[:page]
-    # @search = Article.show.search do
-    #   fulltext search_str
-    #   paginate(:page => page, :per_page => 10)
-    #   order_by :id, :desc
-    # end
-    # articles = @search.results
+    search_str = params[:keyword]
+    page = params[:page]
+    @search = Article.show.search do
+      fulltext search_str
+      paginate(:page => page, :per_page => 10)
+      order_by :id, :desc
+    end
+    articles = @search.results
     render :json => "articles"
   end
 

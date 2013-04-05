@@ -5,8 +5,8 @@ class Article < ActiveRecord::Base
   scope :is_not_from_cagetory, where('is_from_category = false')
   scope :show, where('is_show = true')
 
-  # searchable do 
-  #   text :title
-  #   integer :id
-  # end
+  searchable do 
+    text :title
+    integer :id
+  end
 end
