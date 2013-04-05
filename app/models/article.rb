@@ -15,6 +15,11 @@ class Article < ActiveRecord::Base
     end
   end
 
+  mapping do
+    indexes :id, type: 'integer'
+    indexes :title
+  end
+
   # define_index do
   #   indexes title
   #   indexes :id, sortable: true
