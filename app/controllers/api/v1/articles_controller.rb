@@ -17,6 +17,7 @@ class Api::V1::ArticlesController < Api::ApiController
     @search = Article.show.search do
       fulltext search_str
       paginate(:page => page, :per_page => 10)
+      order_by :id, :desc
     end
     articles = @search.results
     render :json => articles
