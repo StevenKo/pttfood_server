@@ -7,5 +7,6 @@ class Article < ActiveRecord::Base
 
   searchable do 
     text :title
+    integer :id
   end
 end
