@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130331033509) do
+ActiveRecord::Schema.define(:version => 20130405044711) do
 
   create_table "articles", :force => true do |t|
     t.string   "author"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(:version => 20130331033509) do
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
+  add_index "articles", ["is_from_category"], :name => "index_articles_on_is_from_category"
+  add_index "articles", ["is_show"], :name => "index_articles_on_is_show"
   add_index "articles", ["ptt_web_link"], :name => "index_articles_on_ptt_web_link"
 
   create_table "categories", :force => true do |t|
