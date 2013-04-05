@@ -16,6 +16,7 @@ set :use_sudo, false
 
 role :web, "106.187.52.8","106.187.89.116"
 role :app, "106.187.52.8","106.187.89.116"
+role :solr,"106.187.52.8"
 role :db,  "106.187.52.8", :primary => true
 
 
@@ -29,19 +30,19 @@ end
  
 namespace :solr do
   desc "start solr"
-  task :start, :roles => :app, :except => { :no_release => true } do 
+  task :start, :roles => :solr, :except => { :no_release => true } do 
     run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec sunspot-solr start --port=8983 --data-directory=#{shared_path}/solr/data --pid-dir=#{shared_path}/pids"
   end
   desc "stop solr"
-  task :stop, :roles => :app, :except => { :no_release => true } do 
+  task :stop, :roles => :solr, :except => { :no_release => true } do 
     run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec sunspot-solr stop --port=8983 --data-directory=#{shared_path}/solr/data --pid-dir=#{shared_path}/pids"
   end
   desc "reindex the whole database"
-  task :reindex, :roles => :app do
+  task :reindex, :roles => :solr do
     stop
     run "rm -rf #{shared_path}/solr/data"
     start
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake sunspot:solr:reindex --data-directory=#{shared_path}/solr/data --pid-dir=#{shared_path}/pids"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake sunspot:solr:reindex"
   end
 end
  
