@@ -11,7 +11,7 @@ class Article < ActiveRecord::Base
 
   def self.search(params)
 
-    tire.search(page: params[:page], per_page: 10, load: true) do
+    tire.search(page: params[:page], per_page: 20, load: true) do
       query { string params[:keyword], default_operator: "AND" }
       sort{by :id, 'desc'}
     end
@@ -19,7 +19,7 @@ class Article < ActiveRecord::Base
 
   mapping do
     indexes :id, type: 'integer'
-    indexes :title
+    indexes :title, :analyzer => "cjk"
   end
 
   # define_index do
