@@ -37,17 +37,23 @@ class PttCrawler
       article.author = nodes[0].text
       article.release_time = nodes[3].text
 
-      a_nodes = @page_html.css("#mainContent a")
-      a_nodes.each do |node|
-        if node[:href].index("blog")
-          article.link = node[:href] 
-          break
-        end
-      end
+      # a_nodes = @page_html.css("#mainContent a")
+      # a_nodes.each do |node|
+      #   if /((http|https):\/\/([a-zA-Z0-9\.\/\&\_\=\-]*))/ =~ node[:href]
+      #     article.link = $1 if is_blog_link($1)
+      #   end
+      #   # if node[:href].index("blog")
+      #   #   article.link = node[:href] 
+      #   #   break
+      #   # end
+      # end
 
       node = @page_html.css("#mainContent")
       content = node.children[4..node.children.size-1].text
       article.content = content
+      if /((http|https):\/\/([a-zA-Z0-9\.\/\&\_\=\-]*))/ =~ content
+        article.link = $1 if is_blog_link($1)
+      end
     else
 
       begin
@@ -143,5 +149,10 @@ class PttCrawler
         DetailWorker.perform_async(article.id)
       end
     end
-  end 
+  end
+
+  def is_blog_link(link)
+    return true if link.index("blog")
+    return false
+  end
 end

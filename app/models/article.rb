@@ -22,13 +22,20 @@ class Article < ActiveRecord::Base
     indexes :title, :analyzer => "cjk"
   end
 
-  # define_index do
-  #   indexes title
-  #   indexes :id, sortable: true
-  # end
+  def regenerate_ptt_blog_link
+     if /((http|https):\/\/([a-zA-Z0-9\.\/\&\_\=\-]*))/ =~ self.content
+        if is_blog_link($1)
+          self.link = $1 
+          save
+        end
+     end
+  end
 
-  # searchable do 
-  #   text :title
-  #   integer :id
-  # end
+  private
+
+  def is_blog_link(link)
+    return true if link.index("blog")
+    return true if link.index("ipeen.com.tw")
+    return false
+  end
 end

@@ -21,6 +21,14 @@ namespace :crawl do
     end
   end
 
+  task :regenerate_ptt_blog_link => :environment do
+    Article.where("content is not null").find_in_batches do |articles|
+      articles.each do |article|
+        article.regenerate_ptt_blog_link unless article.link
+      end
+    end
+  end
+
   task :crawl_article_detail => :environment do
     Article.where("content is null").select("id,ptt_web_link").find_in_batches do |articles|
       articles.each do |article|
