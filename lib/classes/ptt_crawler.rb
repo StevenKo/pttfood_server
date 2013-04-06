@@ -64,9 +64,8 @@ class PttCrawler
         content = nodes.text
       end
 
-      if content.match("http.*blog.*\.html")
-          link = content.match("http.*blog.*\.html")[0]
-          article.link = link
+      if /((http|https):\/\/([a-zA-Z0-9\.\/\&\_\=\-]*))/ =~ content
+        article.link = $1 if is_blog_link($1)
       end
 
       if content.index("作者:")
@@ -153,6 +152,7 @@ class PttCrawler
 
   def is_blog_link(link)
     return true if link.index("blog")
+    return true if link.index("ipeen.com.tw")
     return false
   end
 end
