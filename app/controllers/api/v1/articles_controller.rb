@@ -28,7 +28,7 @@ class Api::V1::ArticlesController < Api::ApiController
 
   def new_articles
     articles = Article.is_not_from_cagetory.select("id, author, title, release_time, is_show").order("id DESC").paginate(:page => params[:page], :per_page => 20)
-    articles = articles.map{|article| article if article.is_show}
+    articles = articles.select{|article| article if article.is_show}
     render :json => articles
   end
 end
